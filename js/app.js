@@ -4,8 +4,17 @@
 angular.module('NarrowItDownApp', [])
 .controller('NarrowItDownController', NarrowItDownController)
 .service('MenuSearchService', MenuSearchService)
-.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com");
+.constant('ApiBasePath', "https://davids-restaurant.herokuapp.com")
+.directive('foundItems', foundItems);
 
+//foundItems.$inject = [''];
+function foundItems() {
+    var ddo = {
+        templateUrl: 'loader/itemsloader.html'
+
+    };
+    return ddo;
+}
 
 
 NarrowItDownController.$inject = ['MenuSearchService', '$scope'];
@@ -32,12 +41,17 @@ function NarrowItDownController(MenuSearchService, $scope) {
 
     };
 
+    menu.removeItem = function(index) {
+        MenuSearchService.removeItem(index);
+    };
+
 }
 
 MenuSearchService.$inject = ['$http', 'ApiBasePath'];
 function MenuSearchService($http, ApiBasePath) {
 
     var service = this;
+    var foundItems = [];
 
     service.getMatchedMenuItems = function (searchTerm) {
 // 1. descargarse el json y buscar solo en los menu items
@@ -50,7 +64,7 @@ function MenuSearchService($http, ApiBasePath) {
 
 
         var promise = service.getMenuItems();
-        promise.then(function (e){
+        promise.then(function (e){DOM
             service.lookForItems(e);
         })
         .catch(function(error) {
@@ -76,7 +90,7 @@ function MenuSearchService($http, ApiBasePath) {
 
     service.lookForItems = function (searchTerm, items) {
         var data = items;
-        var foundItems = [];
+        //var foundItems = [];
         for (var key in data.menu_items) {
             if (data.menu_items[key].description.indexOf(searchTerm) !== -1) {
                 var item = {};
@@ -92,6 +106,10 @@ function MenuSearchService($http, ApiBasePath) {
         return foundItems;
 
     };
+
+    service.removeItem = function (index) {
+        foundItems.splice(index, 1);
+    }
 
 }
 

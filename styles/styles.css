@@ -4,6 +4,15 @@ h1 {
 h4 {
   margin: 30px;
 }
+ul {
+  border: 1.1em solid rgba(147, 147, 147, 0.2);
+}
+.shorten {
+  white-space: nowrap;
+  overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
+  -o-text-overflow: ellipsis;    /* Opera < 11*/
+  text-overflow:    ellipsis; 
+}
 input[type="text"] {
   width: 200px;
   float: left;
@@ -13,7 +22,7 @@ input[type="text"] {
   margin-left: 10px;
 }
 .loader {
-  display: none;
+  display: true;
   margin-left: 5px;
   font-size: 10px;
   float: left;
