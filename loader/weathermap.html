@@ -1,0 +1,16 @@
+<h3>{{ title }}</h3>
+<div class="container">
+    <div class="row" ng-repeat="items in cont.cities">
+        <div class="col-md-2"><b>id: </b> {{items.id}}</div>
+        <div class="col-md-2"><b>name: </b>{{items.name}}</div>
+        <div class="col-md-2"><b>lat: </b>{{items.coord.lat}}</div>
+        <div class="col-md-2"><b>lon: </b>{{items.coord.lon}}</div>
+        <div class="col-md-2 shorten">
+            <b>Country: </b>
+            <span class="shorten">{{items.country}}</span>
+        </div>
+        <div class="col-md-2">
+        <button class="btn btn-primary" ng-click="cont.getWeather($index)">Get Weather!</button>
+        </div>
+    </div>
+</div>

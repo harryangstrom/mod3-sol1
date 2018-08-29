@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div class="row" ng-repeat="items in dcont.matchedItems">
         <div class="col-md-2"><b>id: </b> {{items.id}}</div>
         <div class="col-md-2"><b>sn: </b>{{items.short_name}}</div>
@@ -8,6 +8,20 @@
         </div>
         <div class="col-md-2">
         <button class="btn btn-primary" ng-click="dcont.removeItem($index)">Remove!</button>
+        </div>
+    </div>
+</div> -->
+<h3>{{ title }}</h3>
+<div class="container">
+    <div class="row" ng-repeat="items in cont.matchedItems">
+        <div class="col-md-2"><b>id: </b> {{items.id}}</div>
+        <div class="col-md-2"><b>sn: </b>{{items.short_name}}</div>
+        <div class="col-md-6 shorten">
+            <b>description: </b>
+            <span class="shorten">{{items.description}}</span>
+        </div>
+        <div class="col-md-2">
+        <button class="btn btn-primary" ng-click="cont.removeItem($index)">Remove!</button>
         </div>
     </div>
 </div>

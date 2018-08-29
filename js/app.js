@@ -6,14 +6,43 @@ angular.module('NarrowItDownApp', [])
 .service('MenuSearchService', MenuSearchService)
 .constant('ApiBasePath', "https://davids-restaurant.herokuapp.com")
 .constant('ApiWeather', "https://api.openweathermap.org")
-.directive('foundItems', foundItems);
+.directive('foundItems', foundItems)
+.directive('weatherMap', weatherMap)
+.directive('weatherForecast', weatherForecast);
 
 //foundItems.$inject = [''];
 function foundItems() {
     var ddo = {
+        scope: {
+            cont: '<myCont',
+            title: '@'
+        },
         templateUrl: 'loader/itemsloader.html'
     };
     return ddo;
+}
+
+function weatherMap() {
+    var ddo = {
+        scope: {
+            cont: '<myCont',
+            title: '@title'
+        },
+        templateUrl: 'loader/weathermap.html'
+    };
+    return ddo;
+}
+
+function weatherForecast() {
+    var ddo = {
+        scope: {
+            cont: '<myCont',
+            title: '@title'
+        },
+        templateUrl: 'loader/weatherforecast.html'    
+    };
+    return ddo;
+
 }
 
 
@@ -22,6 +51,8 @@ function NarrowItDownController(MenuSearchService) {
 
     var menu = this;
     window.SCOPE = menu;
+    menu.cities = [];
+        //menu.title = "Your menu is: " + menu.matchedItems.length + " items.";
 
 // La siguiente función es para la ejecución de la búsqueda mediante promise en el controlador. Espera
 // a que se complete la promise para realizar la búsqueda.
@@ -33,6 +64,9 @@ function NarrowItDownController(MenuSearchService) {
             // menu.items = response.data;
             console.log(response.data);
             menu.matchedItems = MenuSearchService.lookForItems(menu.searchTerm, response.data);
+            menu.title = "Your menu is: " + menu.matchedItems.length + " items.";
+            console.log(menu.matchedItems.length);
+            console.log(menu.title);
             console.log(menu.matchedItems);
         })
         .catch(function (error) {
@@ -40,13 +74,19 @@ function NarrowItDownController(MenuSearchService) {
         });
     };
 
-    menu.getWeather = function() {
+
+
+    menu.getWeather = function(index) {
         console.log("ejecutando getWeather");
-        var promise = MenuSearchService.getWeather();
+        menu.citiId = menu.cities[index].id;
+        console.log("CitiId: ", menu.citiId);
+        var promise = MenuSearchService.getWeather(menu.citiId);
         promise.then(function (response){
             // menu.items = response.data;
             console.log(response.data);
-
+            menu.forecast = response.data.list;
+            console.log(menu.forecast);
+            menu.titlefor = "Forecast for: " + menu.cities[index].name+ ".";
         })
         .catch(function (error) {
             console.log("Error.");
@@ -56,14 +96,20 @@ function NarrowItDownController(MenuSearchService) {
     menu.getCities = function() {
         console.log("ejecutando getCities");
         var promise = MenuSearchService.getCities();
+
         promise.then(function (response){
             // menu.items = response.data;
             console.log(response.data);
+            menu.city = response.data.sort(MenuSearchService.compara);
             menu.city = response.data.find(item => {
                 return item.name == menu.ciudad;
             });
+            if (menu.city !== undefined) {
+            menu.cities.push(menu.city);
             console.log(menu.ciudad, "ID: ", menu.city.id);
             console.log(menu.ciudad, menu.city);
+            }
+            menu.titlecit = "You have: " + menu.cities.length + " cities.";
 
         })
         .catch(function (error) {
@@ -84,6 +130,7 @@ function NarrowItDownController(MenuSearchService) {
  */
     menu.removeItem = function(index) {
         MenuSearchService.removeItem(index);
+        menu.title = "Your menu is: " + menu.matchedItems.length + " items.";
     };
 
 }
@@ -132,13 +179,13 @@ function MenuSearchService($http, ApiBasePath, ApiWeather) {
         return response;
     };
 
-    service.getWeather = function () {
+    service.getWeather = function (citiId) {
         console.log("Ejecutando http promise Weather");
         var response = $http({
           method: "GET",
           url: (ApiWeather + "/data/2.5/forecast"),
           params: {
-              q: "Madrid",
+              id: citiId,
               APPID: "9db9a15fd259808eef01a421dd7a82d3",
               units: "metric"
           }
@@ -182,6 +229,12 @@ function MenuSearchService($http, ApiBasePath, ApiWeather) {
 
     service.getItems = function () {
         return foundItems;
+    };
+
+    service.compara = function compara (a, b) {
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+        return 0;
     };
 
 }
