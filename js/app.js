@@ -86,7 +86,7 @@ function NarrowItDownController(MenuSearchService) {
             console.log(response.data);
             menu.forecast = response.data.list;
             console.log(menu.forecast);
-            menu.titlefor = "Forecast for: " + menu.cities[index].name+ ".";
+            menu.titlefor = "Prevision para: " + menu.cities[index].name+ ".";
         })
         .catch(function (error) {
             console.log("Error.");
@@ -109,7 +109,7 @@ function NarrowItDownController(MenuSearchService) {
             console.log(menu.ciudad, "ID: ", menu.city.id);
             console.log(menu.ciudad, menu.city);
             }
-            menu.titlecit = "You have: " + menu.cities.length + " cities.";
+            menu.titlecit = "Guardadas: " + menu.cities.length + " ciudades.";
 
         })
         .catch(function (error) {

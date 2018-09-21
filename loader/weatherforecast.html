@@ -4,7 +4,11 @@
         <div class="col-md-2"><b>Id: </b> {{cont.citiId}}</div>        
         <div class="col-md-2"><b>fecha: </b> {{items.dt_txt}}</div>
         <div class="col-md-2"><b>temp: </b>{{items.main.temp}}</div>
-        <div class="col-md-4"><b>Previsión: </b><span class="shorten">{{items.weather[0].description}}</span></div>
- 
+        <div class="col-md-4"><b>Previsión: </b>
+            <!-- <span class="shorten">{{items.weather[0].description}}</span> -->
+            <span ng-show="items.weather[0].description.includes('clear');"><img class="weather" src="../imgs/sun 50.png"></span>
+            <span ng-show="items.weather[0].description.includes('clouds')"><img class="weather" src="../imgs/sun cloud 50.png"></span>
+            <span ng-show="items.weather[0].description.includes('rain')"><img class="weather" src="../imgs/rain 50.png"></span>
+        </div>
     </div>
 </div>
