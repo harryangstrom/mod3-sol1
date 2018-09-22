@@ -109,7 +109,12 @@ function NarrowItDownController(MenuSearchService) {
             console.log(menu.ciudad, "ID: ", menu.city.id);
             console.log(menu.ciudad, menu.city);
             }
-            menu.titlecit = "Guardadas: " + menu.cities.length + " ciudades.";
+            if (menu.cities.length > 1 || menu.cities.length == 0) {
+                menu.titlecit = menu.cities.length + " ciudades.";
+            }
+            else {
+                menu.titlecit = menu.cities.length + " ciudad.";
+            }
 
         })
         .catch(function (error) {
