@@ -125,6 +125,7 @@ function NarrowItDownController(MenuSearchService) {
             if (menu.city !== undefined) {
                 indice++;
                 menu.city.empresa = menu.ciudad;
+                menu.ciudad = "";
                 console.log(menu.city);
             menu.cities.push(menu.city);
             console.log(menu.ciudad, "ID: ", menu.city.id);

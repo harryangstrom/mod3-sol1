@@ -3,7 +3,7 @@
     <div class="row cpxbox2" ng-repeat="items in cont.forecast">
         <div class="col-md-2 toppad"><b>Id: </b> {{cont.citiId}}</div>        
         <!-- <div class="col-md-4 toppad"><b>fecha: </b> {{items.dt_txt}}</div> -->
-        <div class="col-md-4 toppad"><b>Período: </b> {{$index%12 + 1}} - {{($index/12 - 0.5 + 2018).toFixed(0)}}</div>
+        <div class="col-md-4 toppad"><b>Mes: </b> {{$index%12 + 1}} - {{($index/12 - 0.5 + 2018).toFixed(0)}}</div>
         <!-- <div class="col-md-2"><b>temp: </b>{{items.main.temp}}</div> -->
         <div class="col-md-6"><b>Previsión: </b>
             <!-- <span class="shorten">{{items.weather[0].description}}</span> -->
