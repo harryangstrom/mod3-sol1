@@ -68,6 +68,15 @@ input[type="text"] {
 .weather {
   width: 50 px;
   height: 50 px;
+  
+}
+.cpxbtn {
+  background-color: #c80820;
+  color: #fff;
+  border-color: #c80820;
+}
+.toppad {
+  padding-top: 13px;
 }
 @-webkit-keyframes load8 {
   0% {

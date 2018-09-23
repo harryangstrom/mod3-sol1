@@ -1,16 +1,16 @@
-<h3>{{ title }}</h3>
+<h3 ng-show="cont.cities.length>0">{{ title }}</h3>
 <div class="container cpxbox" ng-show="cont.cities.length>0">
     <div class="row" ng-repeat="items in cont.cities">
         <div class="col-md-2"><b>id: </b> {{items.id}}</div>
-        <div class="col-md-2"><b>Ciudad: </b>{{items.name}}</div>
+        <div class="col-md-4"><b>Empresa: </b>{{items.empresa}}</div>
         <div class="col-md-2"><b>lat: </b>{{items.coord.lat}}</div>
         <div class="col-md-2"><b>lon: </b>{{items.coord.lon}}</div>
-        <div class="col-md-2 shorten">
+<!--         <div class="col-md-1 shorten">
             <b>País: </b>
             <span class="shorten">{{items.country}}</span>
-        </div>
+        </div> -->
         <div class="col-md-1">
-        <button class="btn btn-primary" ng-click="cont.getWeather($index)">CCF!</button>
+        <button class="btn cpxbtn" ng-click="cont.getWeather($index)">CCF!</button>
         </div>
     </div>
 </div>

@@ -52,6 +52,19 @@ function NarrowItDownController(MenuSearchService) {
     var menu = this;
     window.SCOPE = menu;
     menu.cities = [];
+    var ciudades = [
+        "Madrid",
+        "Barcelona",
+        "Lugo",
+        "Pontevedra",
+        "Bilbao",
+        "Cadiz",
+        "Segovia",
+        "Salamanca",
+        "Guadalajara",
+        "Sevilla"
+    ];
+    var indice = 0;
         //menu.title = "Your menu is: " + menu.matchedItems.length + " items.";
 
 // La siguiente función es para la ejecución de la búsqueda mediante promise en el controlador. Espera
@@ -79,14 +92,15 @@ function NarrowItDownController(MenuSearchService) {
     menu.getWeather = function(index) {
         console.log("ejecutando getWeather");
         menu.citiId = menu.cities[index].id;
-        console.log("CitiId: ", menu.citiId);
+        menu.titlefor = "Previsión para: " + menu.cities[index].empresa+ ".";
+        console.log("CitiId: ", menu.citiId, "Index: ", index);
         var promise = MenuSearchService.getWeather(menu.citiId);
         promise.then(function (response){
             // menu.items = response.data;
             console.log(response.data);
             menu.forecast = response.data.list;
-            console.log(menu.forecast);
-            menu.titlefor = "Prevision para: " + menu.cities[index].name+ ".";
+            //console.log(menu.foritem.name == menu.ciudadecast);
+            //menu.titlefor = "Previsión para: " + menu.cities[index].name+ ".";
         })
         .catch(function (error) {
             console.log("Error.");
@@ -102,18 +116,25 @@ function NarrowItDownController(MenuSearchService) {
             console.log(response.data);
             menu.city = response.data.sort(MenuSearchService.compara);
             menu.city = response.data.find(item => {
-                return item.name == menu.ciudad;
+                //console.log("indice: ", indice);
+                return item.name == ciudades[indice];
+                
+                //console.log("indice: ", indice);
+               // return item.name == menu.ciudad;
             });
             if (menu.city !== undefined) {
+                indice++;
+                menu.city.empresa = menu.ciudad;
+                console.log(menu.city);
             menu.cities.push(menu.city);
             console.log(menu.ciudad, "ID: ", menu.city.id);
             console.log(menu.ciudad, menu.city);
             }
             if (menu.cities.length > 1 || menu.cities.length == 0) {
-                menu.titlecit = menu.cities.length + " ciudades.";
+                menu.titlecit = menu.cities.length + " empresas.";
             }
             else {
-                menu.titlecit = menu.cities.length + " ciudad.";
+                menu.titlecit = menu.cities.length + " empresa.";
             }
 
         })
